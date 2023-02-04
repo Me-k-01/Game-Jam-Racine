@@ -16,7 +16,8 @@ public class Joueur : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        eau=eau-1;   
+        eau=eau-1;
+        game_over();   
     }
 
     void OnCollisionEnter (Collision collision) {
