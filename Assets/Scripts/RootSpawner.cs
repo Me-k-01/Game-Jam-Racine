@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootPlayer : MonoBehaviour {   
+public class RootSpawner : MonoBehaviour {   
     //public Transform start;
     public GameObject rootPrefab;
     private Vector3 topLeft;
-    public CameraMovement cameraMov;
+    public Camera mainCamera;
+    private CameraMovement cameraMov;
     //public Vector3 target;
-    private int blocDimX = 2;
-    private int blocDimY = 2;
+    public float blocDimX = 2;
+    public float blocDimY = 2;
     public int gridSizeWidth = 7;
     public int gridSizeHeight = 7;
     private int firstLine = 0;  
@@ -26,27 +27,30 @@ public class RootPlayer : MonoBehaviour {
                 instances[i, j] = null;
             }
         }
-        Camera cam = GetComponent<Camera>();
-        //blocDimX = (Screen.width / gridSizeWidth) ;
-        //blocDimY = Screen.height / gridSizeHeight;
-        //topLeft = cam.transform.position; //+ new Vector3(blocDimX, y, 3);
+        cameraMov = mainCamera.GetComponent<CameraMovement>();
+        //blocDimX = 10 / gridSizeWidth ;
+        //blocDimY = 10 / gridSizeHeight;
+        //topLeft = mainCamera.transform.position; //+ new Vector3(blocDimX, y, 3);
         topLeft = gameObject.transform.position;
-        int firstI = 0;
-        Vector3 firstPos = new Vector3(
+        topLeft.x = blocDimY * (gridSizeHeight/2);
+        //topLeft += new Vector3(0, mainCamera.transform.position.x, 0)
+
+        int firstI = 0; //gridSizeWidth/2;
+        /*Vector3 firstPos = new Vector3(
             gameObject.transform.position.x + firstI * blocDimY, 
             gameObject.transform.position.y, 
             gameObject.transform.position.z
-        );
+        );*/
           
-        instances[firstI, 0] = CreateRoot(firstPos); 
+        instances[firstI, firstLine] = CreateRoot(topLeft); 
         cameraMov.Move(topLeft.y + blocDimY/2 - blocDimY * (gridSizeHeight/2));
             //new Vector3(blocDimX * (gridSizeWidth/2), blocDimY * (gridSizeHeight/2), 0)); 
     }
     void Update() {
         if (Input.GetButtonDown("Fire1")) {
             Vector3 mousePos = Input.mousePosition;  
-            int i = (int)((mousePos.x / Screen.width) * (gridSizeWidth-1));
-            int j = (int)((1 - (mousePos.y / Screen.height)) * (gridSizeHeight-1));
+            int i = (int)((mousePos.x / Screen.width) * gridSizeWidth);
+            int j = (int)((1 - (mousePos.y / Screen.height)) * gridSizeHeight);
             Debug.Log("i: " + i + ", j: " + j);
             PlaceRoot(i, j);
         }
@@ -54,35 +58,55 @@ public class RootPlayer : MonoBehaviour {
             // TODO : i,j
             int i = 0;
             inc += 1;
-            int j = inc;
+            int j = inc % (gridSizeHeight-1);
 
+            Debug.Log("i: " + i + ", j: " + j);
             PlaceRoot(i, j);
         }
     }
-    void PlaceRoot(int i, int j) {
+
+    private int convertJ(int oldJ) {
+        int j = oldJ + firstLine; 
+        if (oldJ >= gridSizeHeight) {
+            return j - gridSizeHeight;
+        }
+        /*if (oldJ < 0) {
+            return gridSizeHeight;
+        } */
+        return j;
+    }
+
+    void PlaceRoot(int i, int trueJ) {
         // Convertir les j pour utiliser les propriétés du tableau circulaire
         //j = (j + firstLine) %gridSizeHeight;
-        j += firstLine;
-        if (j > gridSizeHeight) {
-            j -= gridSizeHeight;
-        }
+        int j = convertJ(trueJ) ;
+        int prevJ = trueJ <= 0 ? trueJ + gridSizeHeight : trueJ-1; 
+        prevJ = convertJ(prevJ) ; 
+        /*if (prevJ < 0) {
+            prevJ += gridSizeHeight;
+        }*/
+        Debug.Log("currJ : " + j + "  prevJ : " + prevJ); 
 
         // Verifier la validiter de la position
         // TODO : ajouter des impasses
         if (instances[i, j] != null) { // La case actuel est vide 
             return;
-        } 
+        }  
+        Debug.Log("firstLine: " + firstLine);
+        Debug.Log("True: " + (instances[i, prevJ] == null));
         // Et il existe une racine parmis les cases voisines a coté ou au dessus (jamais en dessous parce qu'on ne peut pas remonter)
         if ((i-1 < 0 || instances[i-1, j] == null) && // Gauche
             (i+1 > gridSizeWidth || instances[i+1, j] == null) && // Droite
-            (j == firstLine || instances[i, j-1] == null)) { // Dessus
+            (instances[i, prevJ] == null)) { // Dessus
             return;
         } 
         Vector3 targetPos = topLeft + new Vector3(blocDimX * i, -blocDimY * j, 0);
         GameObject newRoot = CreateRoot(targetPos);
         instances[i, j] = newRoot;
-        if (j > gridSizeHeight / 2) {
-            // On oublie la première ligne
+ 
+        // Si on dépasse la moitié de l'écran, on scroll vers le bas
+        if (trueJ > gridSizeHeight / 2) {
+            // On oublie donc la première ligne
             for (int x = 0; x < gridSizeWidth; x++) {
                 // TODO : delete object
                 instances[x, firstLine] = null; 
@@ -90,6 +114,9 @@ public class RootPlayer : MonoBehaviour {
             topLeft += new Vector3(0, -blocDimY, 0);
             // On incrémente la première ligne 
             firstLine ++;
+            if (firstLine >= gridSizeHeight) {
+                firstLine = 0;
+            } 
             // TODO : faire descendre la camera lorsque l'on s'apporche ainsi du bord
             cameraMov.Move(topLeft.y +blocDimY/2 - blocDimY * (gridSizeHeight/2)); 
         } 
