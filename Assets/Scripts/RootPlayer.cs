@@ -8,10 +8,10 @@ public class RootPlayer : MonoBehaviour {
     private Vector3 topLeft;
     public CameraMovement cameraMov;
     //public Vector3 target;
-    public int blocDimX = 2;
-    public int blocDimY = 2;
-    public int gridSizeWidth = 6;
-    public int gridSizeHeight = 6;
+    private int blocDimX = 2;
+    private int blocDimY = 2;
+    public int gridSizeWidth = 7;
+    public int gridSizeHeight = 7;
     private int firstLine = 0;  
     private GameObject[,] instances; // Matrice des racines 
 
@@ -26,8 +26,12 @@ public class RootPlayer : MonoBehaviour {
                 instances[i, j] = null;
             }
         }
+        Camera cam = GetComponent<Camera>();
+        //blocDimX = (Screen.width / gridSizeWidth) ;
+        //blocDimY = Screen.height / gridSizeHeight;
+        //topLeft = cam.transform.position; //+ new Vector3(blocDimX, y, 3);
         topLeft = gameObject.transform.position;
-        int firstI = gridSizeWidth / 2;
+        int firstI = 0;
         Vector3 firstPos = new Vector3(
             gameObject.transform.position.x + firstI * blocDimY, 
             gameObject.transform.position.y, 
@@ -77,7 +81,7 @@ public class RootPlayer : MonoBehaviour {
         Vector3 targetPos = topLeft + new Vector3(blocDimX * i, -blocDimY * j, 0);
         GameObject newRoot = CreateRoot(targetPos);
         instances[i, j] = newRoot;
-        if (i >= gridSizeHeight - 2) {
+        if (j > gridSizeHeight / 2) {
             // On oublie la première ligne
             for (int x = 0; x < gridSizeWidth; x++) {
                 // TODO : delete object
