@@ -6,12 +6,13 @@ public class RootPlayer : MonoBehaviour {
     //public Transform start;
     public GameObject rootPrefab;
     private Vector3 topLeft;
+    public CameraMovement cameraMov;
     //public Vector3 target;
-    public int blocDimX = 1;
-    public int blocDimY = 1;
+    public int blocDimX = 2;
+    public int blocDimY = 2;
     public int gridSizeWidth = 6;
     public int gridSizeHeight = 6;
-    private int firstLine = 0; 
+    private int firstLine = 0;  
     private GameObject[,] instances; // Matrice des racines 
 
     public Color color;
@@ -25,9 +26,17 @@ public class RootPlayer : MonoBehaviour {
                 instances[i, j] = null;
             }
         }
-        topLeft = this.gameObject.transform.position;
-        GameObject newRoot = CreateRoot(this.gameObject.transform.position);
-        instances[0, 0] = newRoot;
+        topLeft = gameObject.transform.position;
+        int firstI = gridSizeWidth / 2;
+        Vector3 firstPos = new Vector3(
+            gameObject.transform.position.x + firstI * blocDimY, 
+            gameObject.transform.position.y, 
+            gameObject.transform.position.z
+        );
+          
+        instances[firstI, 0] = CreateRoot(firstPos); 
+        cameraMov.Move(topLeft.y + blocDimY/2 - blocDimY * (gridSizeHeight/2));
+            //new Vector3(blocDimX * (gridSizeWidth/2), blocDimY * (gridSizeHeight/2), 0)); 
     }
     void Update() {
         if (Input.GetButtonDown("Fire1")) {
@@ -78,7 +87,7 @@ public class RootPlayer : MonoBehaviour {
             // On incrémente la première ligne 
             firstLine ++;
             // TODO : faire descendre la camera lorsque l'on s'apporche ainsi du bord
-
+            cameraMov.Move(topLeft.y +blocDimY/2 - blocDimY * (gridSizeHeight/2)); 
         } 
     }
     GameObject CreateRoot(Vector3 pos) {
