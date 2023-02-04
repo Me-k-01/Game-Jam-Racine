@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Magma
   - Roche
+  - Eau
   layers:
   - Default
   - TransparentFX
