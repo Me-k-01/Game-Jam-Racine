@@ -32,7 +32,7 @@ public class RootSpawner : MonoBehaviour {
         //blocDimY = 10 / gridSizeHeight;
         //topLeft = mainCamera.transform.position; //+ new Vector3(blocDimX, y, 3);
         topLeft = gameObject.transform.position;
-        topLeft.x = blocDimY * (gridSizeHeight/2);
+        //topLeft.x = blocDimY * (gridSizeHeight/2);
         //topLeft += new Vector3(0, mainCamera.transform.position.x, 0)
 
         int firstI = 0; //gridSizeWidth/2;
