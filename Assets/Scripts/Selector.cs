@@ -17,5 +17,6 @@ public class Selector : MonoBehaviour {
         Vector3 mousePos = Input.mousePosition;  
         int i = (int)((mousePos.x / Screen.width) * (gridSizeWidth-1));
         int j = (int)((1 - (mousePos.y / Screen.height)) * (gridSizeHeight-1));
+        transform.position = new Vector3(i,-j,transform.position.z);
     }
 }
