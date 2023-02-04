@@ -4,37 +4,46 @@ using UnityEngine;
 
 public class followPlayer : MonoBehaviour
 {
-    public GameObject player, previousPlane, currentPlane, nextPlane;
+    public GameObject player;
     public Camera camera;
-    public Vector3 cameraOffset, previousPlaneCoords, nextPlaneCoords;
-    public Vector3 offset, min, max;
-    // Start is called before the first frame update
+    public Vector3 cameraPos1, cameraPos2, nextPlaneOffset;
+    public float maxYPlane0, maxYPlane1;
+
     void Start()
     {
-        //Pour avoir les bords du plan
-        offset = new Vector3(9f, 9f, 9f);
-        min = transform.position - offset;
-        max = transform.position + offset;
+        //Mouvement du camera sur l'axe y pour le prochain plan
+        nextPlaneOffset = new Vector3(0f, 20f, 0f);
 
-        //La position du camera en fonction du plan
-        cameraOffset = new Vector3(-16f, 0f, 0f);
-        camera.transform.position = currentPlane.transform.position + cameraOffset;
+        cameraPos1 = new Vector3(0f, 0f, -16f);
+        cameraPos2 = new Vector3(0f, -20f, -16f);
 
-        previousPlaneCoords = currentPlane.transform.position + cameraOffset;
-        nextPlaneCoords = currentPlane.transform.position + cameraOffset;
+        //A changer après
+        maxYPlane0 = -10f; //valeur y max du bord du premier plan
+        maxYPlane1 = -30f; //valeur y max du bord du deuxieme plan
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Si la racine depasser les bords de plan, changer le plan à afficher
-        if(player.transform.position.y < min.y)
+        //1. Sur le premier plan
+        if (player.transform.position.y > maxYPlane0 || player.transform.position.y < maxYPlane1)
         {
-            camera.transform.position = previousPlaneCoords;
+            //Debug.Log("here1");
+            camera.transform.position = cameraPos1;
         }
-        if(player.transform.position.y > max.y) 
+        //Aller au deuxieme plan
+        if (player.transform.position.y <= maxYPlane0 && player.transform.position.y > maxYPlane1)
         {
-            camera.transform.position = nextPlaneCoords;
+            //Debug.Log("here2");
+            camera.transform.position = cameraPos2;
+            //Retourner au premier plan---------> (0.2f correspond à une petite distance proche du bord pour vérifier que c'est assez proche)
+            if(player.transform.position.y >= maxYPlane1 && player.transform.position.y <= (maxYPlane1 + 0.2f))
+            {
+                //Debug.Log("here3");
+                player.transform.position += (nextPlaneOffset * 2);
+                //camera.transform.position = cameraPos1;
+            }
         }
+        
     }
 }
