@@ -26,11 +26,8 @@ public class setUpTerrain : MonoBehaviour
         {
             for(int j = 0; j < nbrCases; j++)
             {
-                //To work on!!!!!!!!!!!!!
                 objectsPositions.Add(objectPosition);
                 objectPosition = new Vector3(objectPosition.x + w_step, objectPosition.y, 0f);
-                //objectsPositions.Add(new Vector3(0f, i * width / nbrCases, j * height / nbrCases) + offset); //- offset);
-                //Debug.Log(objectsPositions[j]);
             }
             objectPosition = new Vector3(offset.x, objectPosition.y - h_step, 0f);
         }
