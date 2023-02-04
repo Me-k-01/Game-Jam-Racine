@@ -49,7 +49,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0.933
-    - _Grow: 0
+    - _Grow: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scale: -0.49
