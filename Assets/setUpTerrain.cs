@@ -4,34 +4,40 @@ using UnityEngine;
 
 public class setUpTerrain : MonoBehaviour
 {
-    public Vector3 offset, objectPosition;
-    //pour obtenir des points de bord
-    public Vector3 min, max;
-
+    public int nbrCases;
+    public float width, height;
+    public Vector3 offset, objectPosition; 
+    
     public List <GameObject> terrainObjects = new List<GameObject> ();
     // Start is called before the first frame update
     void Start()
     {
+        width = Mathf.Max(transform.localScale.y, transform.localScale.z) * 10f;
+        height = Mathf.Max(transform.localScale.y, transform.localScale.z) * 10f;
+        nbrCases = 8; 
+        offset = new Vector3(0f, 10f, 10f);
         List<Vector3> objectsPositions = new List<Vector3>();
-        offset = new Vector3(9f, 9f, 9f);
-        min = transform.position - offset;
-        max = transform.position + offset;
-
-        Debug.Log(min + "\n");
-        Debug.Log(max);
-        
-        Debug.Log(new Vector3(UnityEngine.Random.Range(min.x, max.x), UnityEngine.Random.Range(min.y, max.y), UnityEngine.Random.Range(min.z, max.z)));
-        foreach(GameObject obj in terrainObjects){
-            objectPosition = new Vector3(0, UnityEngine.Random.Range(min.y, max.y), UnityEngine.Random.Range(min.z, max.z));
-            objectsPositions.Add(objectPosition);
-
-            obj.transform.position = objectPosition;
+        for (int i = 0; i < nbrCases; i++) 
+        {
+            for(int j = 0; j < nbrCases; j++)
+            {
+                //To work on!!!!!!!!!!!!!
+                objectsPositions.Add(new Vector3(0f, i + width / nbrCases, j + height / nbrCases) - offset); //- offset);
+                //Debug.Log(objectsPositions[j]);
+            }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        for(int i = 0; i < nbrCases*nbrCases; ++i)
+        {
+            Debug.Log(objectsPositions[i]);
+        }
+
+        foreach(GameObject obj in terrainObjects)
+        {
+            //Retirer une case aléatoire dans la grille
+            int n = UnityEngine.Random.Range(0, objectsPositions.Count);
+            obj.transform.position = objectsPositions[n];
+            objectsPositions.RemoveAt(n);
+        }
     }
 }
