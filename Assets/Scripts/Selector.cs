@@ -9,7 +9,8 @@ public class Selector : MonoBehaviour {
     public int gridSizeHeight = 6;
 
     // Start is called before the first frame update
-    void Start() { 
+    void Start() {
+        var cam=GetComponent<Camera>(); 
     }
 
     // Update is called once per frame
