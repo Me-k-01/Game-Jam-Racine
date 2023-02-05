@@ -38,7 +38,7 @@ public class Grid : MonoBehaviour {
     void GenerateGrid() { 
         for (int x = 0; x < width ; x++) { 
             for (int y = 0; y < height ; y++) {
-                Debug.Log("Generated tile : " + x + " , " + y); 
+                //Debug.Log("Generated tile : " + x + " , " + y); 
                 var spawnedTile = Instantiate(tilePrefab, topLeft + new Vector3(x, -y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
                 spawnedTile.Init(x, y);
@@ -79,7 +79,7 @@ public class Grid : MonoBehaviour {
         int i = selectedTile.x;
         int j = selectedTile.y;  
         //Print2DArray(data[0]);
-        Debug.Log("Click event on : i : " + selectedTile.x + "  j : " + selectedTile.y); 
+        //Debug.Log("Click event on : i : " + selectedTile.x + "  j : " + selectedTile.y); 
         foreach (var onClick in methodsOnClick) {
             Vector3 pos = topLeft + new Vector3( i, -j, 0);
             onClick(i, j, pos); 
