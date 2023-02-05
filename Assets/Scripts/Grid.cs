@@ -33,7 +33,7 @@ public class Grid : MonoBehaviour {
         }
         tiles = new Tile[width, height];
         GenerateGrid();
-        cameraMov.SetX(topLeft.x + 0.5f + (float)width/2);
+        cameraMov.SetX(topLeft.x + (float)width/2);
     }
     void GenerateGrid() { 
         for (int x = 0; x < width ; x++) { 
