@@ -8,7 +8,7 @@ public class Grid : MonoBehaviour {
     private Tile[,] tiles; // Matrice circulaire verticalement des objets 
     public int startY = 0; // Indice Y de départ de la matrice.
     public int width = 7; //
-    public int height = 5;  
+    public int height = 7;  
     public CameraMovement cameraMov;
     public Vector2Int selectedTile = new Vector2Int(0, 0);
 
@@ -62,6 +62,7 @@ public class Grid : MonoBehaviour {
         for (int x = 0; x < width; x++) {
             // TODO : delete object
             data[x, startY] = null; 
+            
             Debug.Log(tiles[x, startY]);
             tiles[x, startY].transform.position = new Vector3(
                 tiles[x, startY].transform.position.x,
@@ -78,7 +79,7 @@ public class Grid : MonoBehaviour {
         //    startY = 0;
         //} 
         // TODO : faire descendre la camera lorsque l'on s'apporche ainsi du bord
-        cameraMov.Move(topLeft.y + 0.5f + (float)height/2); 
+        cameraMov.Move(topLeft.y - 0.5f - (float)height/2); 
 
     }
     // Update is called once per frame
