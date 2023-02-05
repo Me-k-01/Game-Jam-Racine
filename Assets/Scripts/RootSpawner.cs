@@ -26,13 +26,10 @@ public class RootSpawner : MonoBehaviour {
         //topLeft.x = blocDimY * (gridSizeHeight/2);
         //topLeft += new Vector3(0, mainCamera.transform.position.x, 0)
 
-        int firstI = 0; //gridSizeWidth/2;
-        /*Vector3 firstPos = new Vector3(
-            gameObject.transform.position.x + firstI * blocDimY, 
-            gameObject.transform.position.y, 
-            gameObject.transform.position.z
-        );*/ 
-        instances[firstI, grid.startY] = CreateRoot(grid.topLeft); 
+        int firstI = grid.width/2; //gridSizeWidth/2;
+        Vector3 firstPos = grid.topLeft;
+        firstPos.x += firstI; 
+        instances[firstI, grid.startY] = CreateRoot(firstPos, rootPrefab.transform.rotation); 
         grid.AddGameObjectGrid(ref instances);
         grid.AddDelegateOnClick(OnTileClick);
         //cameraMov.Move(topLeft.y + blocDimY/2 - blocDimY * (gridSizeHeight/2));
@@ -72,15 +69,28 @@ public class RootSpawner : MonoBehaviour {
             return;
         }  
         Debug.Log("firstLine: " + grid.startY);
+        bool hasLeftPlant = (i-1 >= 0 && instances[i-1, j] != null);
+        bool hasRightPlant = (i+1 <= grid.width && instances[i+1, j] != null);
+        bool hasTopPlant = (j-1 >= 0) && (instances[i, j-1] != null);
+
         //Debug.Log("True: " + (instances[i, j-1] == null));
         // Et il existe une racine parmis les cases voisines a coté ou au dessus (jamais en dessous parce qu'on ne peut pas remonter)
-        if ((i-1 < 0 || instances[i-1, j] == null) && // Gauche
+        if (! (hasLeftPlant || hasRightPlant || hasTopPlant)) return;
+        /*if ((i-1 < 0 || instances[i-1, j] == null) && // Gauche
             (i+1 > grid.width || instances[i+1, j] == null) && // Droite
             ((j-1 < 0) || instances[i, j-1] == null)) { // Dessus
             return;
-        } 
+        } */
+        Quaternion rotation = rootPrefab.transform.rotation;
+        if (! hasTopPlant) { 
+            if (hasRightPlant) {
+                rotation.z = 0;
+            } else {
+                rotation.z = -90;
+            }
+        }
         //Vector3 targetPos = grid.topLeft + new Vector3( i, -j, 0);
-        GameObject newRoot = CreateRoot(pos);
+        GameObject newRoot = CreateRoot(pos, rotation);
         instances[i, j] = newRoot;
  
         // Si on dépasse la moitié de l'écran, on scroll vers le bas 
@@ -88,8 +98,8 @@ public class RootSpawner : MonoBehaviour {
             grid.Down();
         } 
     }
-    GameObject CreateRoot(Vector3 pos) {
-        GameObject clone = Instantiate(rootPrefab, pos, rootPrefab.transform.rotation); //, Quaternion.identity);
+    GameObject CreateRoot(Vector3 pos, Quaternion rotation) {
+        GameObject clone = Instantiate(rootPrefab, pos, rotation ); //rootPrefab.transform.rotation); //, Quaternion.identity);
         //clone.GetComponent<RootGrow>().StartGrow();
         return clone;
     }
