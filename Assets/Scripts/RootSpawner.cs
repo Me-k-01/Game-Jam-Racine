@@ -95,7 +95,7 @@ public class RootSpawner : MonoBehaviour {
         instances[i, j] = newRoot;
  
         // Si on dépasse la moitié de l'écran, on scroll vers le bas 
-        if (j > grid.height / 2) {
+        if (j > 2) {
             grid.Down();
         } 
     }

@@ -40,5 +40,13 @@ public class PlayerCollider : MonoBehaviour {
             eauManager.eau = playerStats.eau;
             Debug.Log("Collision Eau");
         }
+        if(collision.collider.tag=="Bunny") {
+            playerStats.vie -= 10; 
+            Debug.Log("Collision Bunny");
+        }
+        if(collision.collider.tag=="Mole") {
+            playerStats.vie -= 10; 
+            Debug.Log("Collision Mole");
+        }
     }
 }

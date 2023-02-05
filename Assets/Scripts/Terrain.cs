@@ -49,7 +49,8 @@ public class Terrain : MonoBehaviour {
         if (Random.Range(0.0f, 1f) <= spawnChance) {
             // On fait spawn
             int i = Random.Range(0, grid.width); 
-            row[i] = Instantiate( PickPrefab(), grid.topLeft + new Vector3(i, -j, 0.4f), Quaternion.identity);
+            GameObject prefab = PickPrefab();
+            row[i] = Instantiate( prefab, grid.topLeft + new Vector3(i, -j, 0.4f), prefab.transform.rotation);
         }
 
         if (bottomRight.y > grid.topLeft.y) {
