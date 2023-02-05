@@ -8,6 +8,7 @@ public class RootSpawner : MonoBehaviour {
     //public Vector3 target; 
     public Grid grid; 
     private GameObject[,] instances; // Matrice des racines 
+    private int dataId;
  
     public int inc = 0; 
 
@@ -30,7 +31,7 @@ public class RootSpawner : MonoBehaviour {
         Vector3 firstPos = grid.topLeft;
         firstPos.x += firstI; 
         instances[firstI, grid.startY] = CreateRoot(firstPos, rootPrefab.transform.rotation); 
-        grid.AddGameObjectGrid(ref instances);
+        dataId = grid.AddGameObjectGrid(ref instances);
         grid.AddDelegateOnClick(OnTileClick);
         //cameraMov.Move(topLeft.y + blocDimY/2 - blocDimY * (gridSizeHeight/2));
             //new Vector3(blocDimX * (gridSizeWidth/2), blocDimY * (gridSizeHeight/2), 0)); 
