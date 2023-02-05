@@ -30,9 +30,9 @@ public class PlayerCollider : MonoBehaviour {
             playerStats.eau += 10; 
             Debug.Log("Collision Eau");
         }
-        if(collision.collider.tag=="Bunny") {
+        if(collision.collider.tag=="Rabbit") {
             playerStats.vie -= 10; 
-            Debug.Log("Collision Bunny");
+            Debug.Log("Collision Rabbit");
         }
         if(collision.collider.tag=="Mole") {
             playerStats.vie -= 10; 
