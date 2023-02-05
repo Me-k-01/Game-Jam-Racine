@@ -48,9 +48,8 @@ public class setUpTerrain : MonoBehaviour
             Debug.Log(objectsPositions[i]);
         }*/
 
-        foreach(GameObject obj in terrainObjects)
-        {
-            //Retirer une case aléatoire dans la grille
+        foreach(GameObject obj in terrainObjects) {
+            //Retirer une case alï¿½atoire dans la grille
             int n = UnityEngine.Random.Range(0, objectsPositions.Count);
             obj.transform.position = objectsPositions[n];
             objectsPositions.RemoveAt(n);
