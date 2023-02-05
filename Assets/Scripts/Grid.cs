@@ -6,11 +6,13 @@ public class Grid : MonoBehaviour {
     public Tile tilePrefab;
 
     public delegate void DelegateOnCLick( int i, int j, Vector3 pos);
-    public delegate GameObject[] DelegateNewRow( );
+    public delegate GameObject[] DelegateNewRow(int j);
     private List<GameObject[,]> data = new List<GameObject[,]>(); // Liste des matrices circulaires verticalement des game objets 
     private List<DelegateOnCLick> methodsOnClick = new List<DelegateOnCLick>(); // Methodes a appeller lors d'un event click
+    //private List<int> methodsOnClickData = new List<int>();
     private List<DelegateNewRow> methodsNewRow = new List<DelegateNewRow>(); // Methodes a appeller lors d'un event nouvelle ligne
-    
+    private List<int> methodsNewRowData = new List<int>();
+
     private int[] dataIndex; // Correspondance de chaque index pour les données de data 
     private Tile[,] tiles; // Matrice circulaire verticalement des objets 
     public int startY = 0; // Indice Y de départ de la matrice.
@@ -49,11 +51,16 @@ public class Grid : MonoBehaviour {
         }
     }
 
-    public void AddGameObjectGrid(ref GameObject[,] grid) {
-        data.Add(grid);
+    public int AddGameObjectGrid(ref GameObject[,] grid) {
+        data.Add(grid); 
+        return data.Count -1;
     }
     public void AddDelegateOnClick(DelegateOnCLick OnClick) {
         methodsOnClick.Add(OnClick);
+    }
+    public void AddDelegateOnNewRow(DelegateNewRow OnNewRow, int numData) {
+        methodsNewRow.Add(OnNewRow);
+        methodsNewRowData.Add(numData);
     }
 
     public void Select(int i, int j) {
@@ -131,8 +138,20 @@ public class Grid : MonoBehaviour {
         }
     } 
 
+    public void NewRow(int y) {
+        for (int i = 0; i < methodsNewRowData.Count ; i++) {
+            
+            GameObject[] row = methodsNewRow[i](y);
+            int index = methodsNewRowData[i];
+            for (int x = 0; x < width; x++) { 
+                data[index][x, y] = row[x];
+            }
+        }
+    }
+
     public void Down() { // Fonction pour descendre vers le bas
         ClearRow(startY); 
+        NewRow(height -1);
         // On decremente la hauteur
         topLeft.y --; 
         // Et on incrémente la première ligne 
