@@ -3,32 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
-    public int vie;
-    public int eau;
-
-    private VieManager vieManager;
-    private EauManager eauManager;
+    public int vie=10;
+    public int eau=10;
+ 
     // Start is called before the first frame update
-    void Start() {
-        vieManager= GameObject.Find("Canvas").GetComponent<VieManager>();
-        eauManager= GameObject.Find("Canvas").GetComponent<EauManager>();
-        vie=10;
-        eau=10;
-
-        vieManager.vie = vie;
-        eauManager.eau =eau;
+    void Start() {  
     }
 
     // Update is called once per frame 
 
     public void Moved() {
-        eau --;
-        eauManager.eau -= 1f;
+        eau --; 
+        GameOverTest();
     }
 
-    void game_over()
-    {
-        if((vie==0) ||(eau==0)){
+    public void GameOverTest() {
+        if((vie<=0) ||(eau<=0)){
+            Debug.Log("Perdu!");
             Application.Quit();
         }
     }

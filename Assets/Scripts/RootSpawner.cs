@@ -5,6 +5,7 @@ using UnityEngine;
 public class RootSpawner : MonoBehaviour {   
     //public Transform start;
     public GameObject rootPrefab;  
+    public PlayerStats playerStats;  
     //public Vector3 target; 
     public Grid grid; 
     private GameObject[,] instances; // Matrice des racines 
@@ -93,8 +94,10 @@ public class RootSpawner : MonoBehaviour {
         //Vector3 targetPos = grid.topLeft + new Vector3( i, -j, 0);
         GameObject newRoot = CreateRoot(pos, rotation);
         instances[i, j] = newRoot;
- 
-        // Si on dépasse la moitié de l'écran, on scroll vers le bas 
+
+        playerStats.Moved();
+
+        // Si on dépasse un certain seuil, on scroll vers le bas 
         if (j > 2) {
             grid.Down();
         } 
