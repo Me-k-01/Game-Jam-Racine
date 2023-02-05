@@ -43,7 +43,6 @@ MonoBehaviour:
   components:
   - {fileID: 172662462499077134}
   - {fileID: -3748996789036602662}
-  - {fileID: 7992237676537535736}
   - {fileID: 8154792037353521246}
 --- !u!114 &172662462499077134
 MonoBehaviour:
@@ -73,22 +72,6 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &7992237676537535736
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
-  m_Name: ChromaticAberration
-  m_EditorClassIdentifier: 
-  active: 1
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.2
 --- !u!114 &8154792037353521246
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -101,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   mode:
     m_OverrideState: 1
     m_Value: 2
