@@ -8,6 +8,8 @@ TagManager:
   - Roche
   - Eau
   - Insecte
+  - Rabbit
+  - Mole
   layers:
   - Default
   - TransparentFX
