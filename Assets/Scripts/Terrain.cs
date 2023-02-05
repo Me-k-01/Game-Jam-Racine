@@ -9,7 +9,7 @@ public class Terrain : MonoBehaviour {
     public GameObject[,] terrainObjects;
     public int size = 5; 
     
-    private GameObject secondTerrain; 
+    private GameObject secondTerrain = null; 
     [Range(0, 1)]
     public float spawnChance = 0.5f;
     private Vector3 bottomRight;
@@ -49,7 +49,7 @@ public class Terrain : MonoBehaviour {
         if (Random.Range(0.0f, 1f) <= spawnChance) {
             // On fait spawn
             int i = Random.Range(0, grid.width); 
-            row[i] = Instantiate( PickPrefab(), grid.topLeft + new Vector3(i, -j, 0), Quaternion.identity);
+            row[i] = Instantiate( PickPrefab(), grid.topLeft + new Vector3(i, -j, 0.4f), Quaternion.identity);
         }
 
         if (bottomRight.y > grid.topLeft.y) {
