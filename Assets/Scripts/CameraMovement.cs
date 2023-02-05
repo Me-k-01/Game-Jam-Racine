@@ -20,10 +20,17 @@ public class CameraMovement : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, moveToPosition, speed);
         
         // Ensure the camera always looks at the player
-        //transform.LookAt(transform.parent);
+        // transform.LookAt(transform.parent);
     }
     public void Move(float targetY) {
         started = true;
         moveToPosition = new Vector3(transform.position.x, targetY, transform.position.z);
+    }
+
+    public void SetX(float x) {
+        transform.position = new Vector3(x, 
+            transform.position.y, 
+            transform.position.z
+        );
     }
 }
