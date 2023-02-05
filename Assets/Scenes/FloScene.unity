@@ -722,15 +722,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6160665789141486947, guid: ee32c551210f7b05da166bb7b4ca0429, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.4
+      value: -9.14
       objectReference: {fileID: 0}
     - target: {fileID: 6160665789141486947, guid: ee32c551210f7b05da166bb7b4ca0429, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6160665789141486947, guid: ee32c551210f7b05da166bb7b4ca0429, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6160665789141486947, guid: ee32c551210f7b05da166bb7b4ca0429, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   terrain: {fileID: 0}
   prefabs:
   - {fileID: 513316330}
-  sizeY: 5
+  size: 5
   spawnChance: 0.5
 --- !u!4 &1424473093
 Transform:
@@ -1325,8 +1325,8 @@ MonoBehaviour:
   terrain: {fileID: 1922097352}
   prefabs:
   - {fileID: 513316330}
-  sizeY: 20
-  spawnChance: 0.5
+  size: 20
+  spawnChance: 0.204
 --- !u!4 &1968355353
 Transform:
   m_ObjectHideFlags: 0
