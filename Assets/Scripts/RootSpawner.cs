@@ -100,6 +100,7 @@ public class RootSpawner : MonoBehaviour {
         // Si on dépasse un certain seuil, on scroll vers le bas 
         if (j > 2) {
             grid.Down();
+            playerStats.score ++;
         } 
     }
     GameObject CreateRoot(Vector3 pos, Quaternion rotation) {

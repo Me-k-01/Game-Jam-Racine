@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour {
     public int vie=10;
     public int eau=10;
+    public int score=0;
  
     // Start is called before the first frame update
     void Start() {  
@@ -18,7 +19,7 @@ public class PlayerStats : MonoBehaviour {
     }
 
     public void GameOverTest() {
-        if((vie<=0) ||(eau<=0)){
+        if ((vie<=0) ||(eau<=0)){
             Debug.Log("Perdu!");
             Application.Quit();
         }
