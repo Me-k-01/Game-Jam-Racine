@@ -152,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2741967020235291450, guid: 665c6e294e1c60fab8ea9c7ddb8f60c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.91
+      value: -0.7400018
       objectReference: {fileID: 0}
     - target: {fileID: 2741967020235291450, guid: 665c6e294e1c60fab8ea9c7ddb8f60c8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -283,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382663576}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.69, y: -38.1, z: 10.88}
+  m_LocalPosition: {x: 5.69, y: -36.93, z: 10.88}
   m_LocalScale: {x: 5.2899, y: 1, z: 7.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -438,7 +438,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 406599905}
   startY: 0
   endY: 0
-  width: 13
+  width: 15
   height: 9
   cameraMov: {fileID: 650833713}
   selectedTile: {x: 0, y: 0}
