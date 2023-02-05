@@ -15,8 +15,7 @@ public class RootSpawner : MonoBehaviour {
     public int gridSizeHeight = 7;
     private int firstLine = 0;  
     private GameObject[,] instances; // Matrice des racines 
-
-    public Color color;
+ 
     public int inc = 0; 
 
     void Start() {  
