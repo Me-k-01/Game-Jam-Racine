@@ -1956,7 +1956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vie: 20
-  eau: 20
+  eau: 40
 --- !u!1001 &1867582423
 PrefabInstance:
   m_ObjectHideFlags: 0
