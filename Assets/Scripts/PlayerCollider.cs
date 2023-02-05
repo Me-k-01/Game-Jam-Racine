@@ -14,20 +14,20 @@ public class PlayerCollider : MonoBehaviour {
     }
 
     void OnCollisionEnter (Collision collision) {
-        if(collision.collider.name == "Magma")  {
+        if(collision.collider.tag == "Magma")  {
             playerStats.eau -= 3;
             Debug.Log("Collision Magma");
         }
-        if(collision.collider.name=="Insecte") {
+        if(collision.collider.tag=="Insecte") {
             playerStats.vie -= 2;
             Debug.Log("Collision Insecte");
         }
-        if(collision.collider.name=="Roche") {
+        if(collision.collider.tag=="Roche") {
             playerStats.eau --;
             playerStats.vie --;
             Debug.Log("Collision Roche");
         }
-        if(collision.collider.name=="Eau") {
+        if(collision.collider.tag=="Eau") {
             playerStats.eau += 10; 
             Debug.Log("Collision Eau");
         }

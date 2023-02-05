@@ -68,7 +68,7 @@ public class RootSpawner : MonoBehaviour {
         if (instances[i, j] != null) { // La case actuel est vide 
             return;
         }  
-        Debug.Log("firstLine: " + grid.startY);
+        //Debug.Log("firstLine: " + grid.startY);
         bool hasLeftPlant = (i-1 >= 0 && instances[i-1, j] != null);
         bool hasRightPlant = (i+1 <= grid.width && instances[i+1, j] != null);
         bool hasTopPlant = (j-1 >= 0) && (instances[i, j-1] != null);
