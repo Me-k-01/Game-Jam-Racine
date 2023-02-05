@@ -34,6 +34,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_abdf57fd6f414afda1bcb614bce48a2f_Texture_1:
+        m_Texture: {fileID: 2800000, guid: f86b89b7de3ddd59d90687308dab5d3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e1080a0fc22a46d08a2c7190426a3a1f_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 35537868f601fb60ead09b7498a93acf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e2f104f1b16a45fe88f94ab4be6d10e2_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 3dc0e8fc165839c1c8a3398de2e40d93, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e7e6bcd85454439b8224ef3f23f89118_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 3e4474d5d16be76278044c6ed752988a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
