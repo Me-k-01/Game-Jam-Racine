@@ -10,8 +10,11 @@ public class Grid : MonoBehaviour {
     private List<GameObject[,]> data = new List<GameObject[,]>(); // Liste des matrices circulaires verticalement des game objets 
     private List<DelegateOnCLick> methodsOnClick = new List<DelegateOnCLick>(); // Methodes a appeller lors d'un event click
     private List<DelegateNewRow> methodsNewRow = new List<DelegateNewRow>(); // Methodes a appeller lors d'un event nouvelle ligne
+    
+    private int[] dataIndex; // Correspondance de chaque index pour les données de data 
     private Tile[,] tiles; // Matrice circulaire verticalement des objets 
     public int startY = 0; // Indice Y de départ de la matrice.
+    public int endY = 0;
     public int width = 7; //
     public int height = 7;  
     public CameraMovement cameraMov;
@@ -23,7 +26,11 @@ public class Grid : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() { 
-        data.Add(new GameObject[width, height]);
+        //data.Add(new GameObject[width, height]);
+        dataIndex = new int[height];
+        for (int i = 0; i < height; i++) {
+            dataIndex[i] = i; 
+        }
         tiles = new Tile[width, height];
         GenerateGrid();
         cameraMov.SetX(topLeft.x + 0.5f + (float)width/2);
@@ -55,42 +62,76 @@ public class Grid : MonoBehaviour {
     }
     public int ConvertY(int oldJ) {
         int j = oldJ + startY; 
-        if (oldJ >= height) {
+        if (j >= height) {
             return j - height;
         }
-        /*if (oldJ < 0) {
-            return gridSizeHeight;
+        /*if (j < 0) {
+            return j + height;
         } */
         return j;
     }
+    // TODO : trouver une meilleur solution
+    int GetIndex(int j) {
+        return dataIndex[j];
+    }
+
     public void OnClick() {
         int i = selectedTile.x;
-        int j = ConvertY(selectedTile.y);
-        //Debug.Log("Click event on : i : " + i + "  j : " + j); 
+        int j = selectedTile.y;  
+        //Print2DArray(data[0]);
+        Debug.Log("Click event on : i : " + selectedTile.x + "  j : " + selectedTile.y); 
         foreach (var onClick in methodsOnClick) {
             Vector3 pos = topLeft + new Vector3( i, -j, 0);
-            onClick(i, j, pos);Debug.Log("oncl");
+            onClick(i, j, pos); 
         } 
     }
 
     void ClearRow(int y) {
         // On oublie donc la première ligne
-        for (int x = 0; x < width; x++) {
-            // TODO : delete object 
-            foreach (var d in data) {
-                d[x, y] = null;  
-            }
-
-            //Debug.Log(tiles[x, y]);
+        foreach (var d in data) {
+            for (int x = 0; x < width; x++) { 
+                Destroy(d[x, 0]);
+                d[x, 0] = null;    
+            /*
+            // Déplacer en bas
             tiles[x, y].transform.position = new Vector3(
                 tiles[x, y].transform.position.x,
                 tiles[x, y].transform.position.y - height,
                 tiles[x, y].transform.position.z
-            );
-        } 
-    }
+            );  */
+            }  
 
-    void Down() { // Fonction pour descendre vers le bas
+  
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height -1; j++) { 
+                    d[i, j] = d[i, j+1];
+                } 
+            } 
+            for (int i = 0; i < width; i++) {
+                d[i, height -1] = null;
+            }
+        }
+        // Update data index, le dernier deviens le premier, et on incremente le reste
+        /*for (int i = 0; i < height; i++) {
+            dataIndex[i] ++;
+            if (dataIndex[i] >= height) {
+                dataIndex[i] = 0;
+            } 
+        }*/
+        // TODO : Ça fait 5h et j'arrive pas à faire autrement, à l'aide.
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                // Déplacer en bas
+                tiles[i, j].transform.position = new Vector3(
+                    tiles[i, j].transform.position.x,
+                    tiles[i, j].transform.position.y - 1,
+                    tiles[i, j].transform.position.z
+                );  
+            }
+        }
+    } 
+
+    public void Down() { // Fonction pour descendre vers le bas
         ClearRow(startY); 
         // On decremente la hauteur
         topLeft.y --; 
@@ -100,8 +141,8 @@ public class Grid : MonoBehaviour {
         //if (startY >= height) {
         //    startY = 0;
         //} 
-        // TODO : faire descendre la camera lorsque l'on s'apporche ainsi du bord
-        cameraMov.Move(topLeft.y - 0.5f - (float)height/2); 
+        // TODO : faire descendre la camera lorsque l'on s'approche du bord
+        cameraMov.Move(topLeft.y + 0.5f - (float)height/2); 
     }
     // Update is called once per frame
     void Update() { 

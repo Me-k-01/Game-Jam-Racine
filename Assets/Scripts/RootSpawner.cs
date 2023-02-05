@@ -61,45 +61,32 @@ public class RootSpawner : MonoBehaviour {
     void OnTileClick(int i, int j, Vector3 pos) {
         // Convertir les j pour utiliser les propriétés du tableau circulaire
         //j = (j + firstLine) %gridSizeHeight;
-        /*int j = grid.ConvertY(trueJ) ;  */ 
+        /*int j = grid.ConvertY(trueJ) ;  */  
+        //int prevJ = j <= 0 ? j-1 + grid.height : j-1; 
         //Debug.Log("currJ : " + j + "  prevJ : " + prevJ); 
-        int prevJ = j <= 0 ? j-1 + grid.height : j-1; 
         //prevJ = grid.ConvertY(prevJ) ;
-
+        
         // Verifier la validiter de la position
         // TODO : ajouter des impasses
         if (instances[i, j] != null) { // La case actuel est vide 
             return;
         }  
         Debug.Log("firstLine: " + grid.startY);
-        Debug.Log("True: " + (instances[i, prevJ] == null));
+        //Debug.Log("True: " + (instances[i, j-1] == null));
         // Et il existe une racine parmis les cases voisines a coté ou au dessus (jamais en dessous parce qu'on ne peut pas remonter)
         if ((i-1 < 0 || instances[i-1, j] == null) && // Gauche
             (i+1 > grid.width || instances[i+1, j] == null) && // Droite
-            ((prevJ == grid.startY -1) || instances[i, prevJ] == null)) { // Dessus
+            ((j-1 < 0) || instances[i, j-1] == null)) { // Dessus
             return;
         } 
         //Vector3 targetPos = grid.topLeft + new Vector3( i, -j, 0);
         GameObject newRoot = CreateRoot(pos);
         instances[i, j] = newRoot;
  
-        // Si on dépasse la moitié de l'écran, on scroll vers le bas
-        /*
-        if (trueJ > gridSizeHeight / 2) {
-            // On oublie donc la première ligne
-            for (int x = 0; x < gridSizeWidth; x++) {
-                // TODO : delete object
-                instances[x, firstLine] = null; 
-            }
-            topLeft += new Vector3(0, -blocDimY, 0);
-            // On incrémente la première ligne 
-            firstLine ++;
-            if (firstLine >= gridSizeHeight) {
-                firstLine = 0;
-            } 
-            // TODO : faire descendre la camera lorsque l'on s'apporche ainsi du bord
-            //cameraMov.Move(topLeft.y +blocDimY/2 - blocDimY * (gridSizeHeight/2)); 
-        } */
+        // Si on dépasse la moitié de l'écran, on scroll vers le bas 
+        if (j > grid.height / 2) {
+            grid.Down();
+        } 
     }
     GameObject CreateRoot(Vector3 pos) {
         GameObject clone = Instantiate(rootPrefab, pos, rootPrefab.transform.rotation); //, Quaternion.identity);
